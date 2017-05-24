@@ -1,0 +1,21 @@
+{
+  "name": "nodejsExamples",
+  "version": "0.0.1",
+  "private": false,
+  "description": "nodejs学习中的一些例子",
+  "keywords": [
+    "nodejs",
+    "es6"
+  ],
+  "author": "FDD <smileFDD@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sakitam-fdd/nodejsExamples.git"
+  },
+  "scripts": {
+    "build": "webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev",
+    "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
+    "test:watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+  }
+}

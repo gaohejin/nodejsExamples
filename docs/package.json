@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "nodejs例子相关说明文档",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sakitam-fdd/nodejsExamples.git"
+  },
+  "keywords": [
+    "nodejsExamples"
+  ],
+  "author": "FDD",
+  "bugs": {
+    "url": "https://github.com/sakitam-fdd/nodejsExamples/issues"
+  },
+  "homepage": "https://github.com/sakitam-fdd/nodejsExamples#readme",
+  "dependencies": {
+    "gitbook": "^3.2.0"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  }
+}
