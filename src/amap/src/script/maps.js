@@ -223,11 +223,10 @@
   }
 
   function pc () {
-    // for (var a = Yb + "/maps/main?v=" + config[4] + "&key=" + config[0] + "&m=" + config.fN.join(",") + "&vrs=1.3.27.5", b = document.getElementsByTagName("script"), c, d = 0; d < b.length; d += 1)if (0 === b[d].src.indexOf(Yb.split(":")[1] + "/maps?")) {
-    //   c = b[d];
-    //   break
-    // }
-    var a = './script/main.js'
+    for (var a = Yb + "/maps/main?v=" + config[4] + "&key=" + config[0] + "&m=" + config.fN.join(",") + "&vrs=1.3.27.5", b = document.getElementsByTagName("script"), c, d = 0; d < b.length; d += 1)if (0 === b[d].src.indexOf(Yb.split(":")[1] + "/maps?")) {
+      c = b[d];
+      break
+    }
     config[5] || c && c.async ? oc(a) : (document.write('<script id="amap_main_js" src=\'' + a + "' type='text/javascript'>\x3c/script>"), setTimeout(function () {
       document.getElementById("amap_main_js") || oc(a)
     }, 1))
