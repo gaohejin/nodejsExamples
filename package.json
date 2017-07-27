@@ -13,12 +13,13 @@
     "url": "https://github.com/sakitam-fdd/nodejsExamples.git"
   },
   "scripts": {
-    "build": "webpack --env build",
-    "dev": "webpack --progress --colors --watch --env dev",
-    "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
-    "test:watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+    "start-koa-helloworld": "node examples/koa/helloworld/index.js",
+    "start-localProxy-agent": "node examples/localProxy/src/agent.js"
   },
   "dependencies": {
+    "http": "0.0.0",
+    "superagent": "^3.5.2",
+    "superagent-charset": "^1.1.1",
     "ejs": "^2.5.6",
     "fs-promise": "^2.0.3",
     "koa": "^2.2.0",
