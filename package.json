@@ -1,25 +1,16 @@
 {
-  "name": "nodejsExamples",
+  "name": "nodejs-examples",
+  "description": "Examples using nodejs",
   "version": "0.0.1",
-  "private": false,
-  "description": "nodejs学习中的一些例子",
-  "keywords": [
-    "nodejs",
-    "es6"
-  ],
   "author": "FDD <smileFDD@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/sakitam-fdd/nodejsExamples.git"
   },
   "scripts": {
-    "start-koa-helloworld": "node examples/koa/helloworld/index.js",
-    "start-localProxy-agent": "node examples/localProxy/src/agent.js"
+    "test": "make test"
   },
   "dependencies": {
-    "http": "0.0.0",
-    "superagent": "^3.5.2",
-    "superagent-charset": "^1.1.1",
     "ejs": "^2.5.6",
     "fs-promise": "^2.0.3",
     "koa": "^2.2.0",
@@ -32,6 +23,7 @@
     "koa-session": "^5.0.0",
     "koa-static": "^3.0.0",
     "koa-views": "^6.0.2",
+    "pg": "^7.3.0",
     "streaming-json-stringify": "^3.1.0",
     "supertest": "^3.0.0",
     "swig": "^1.4.2"
@@ -41,8 +33,12 @@
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
-    "mocha": "^3.4.2",
+    "mocha": "*",
     "should": "^3.3.2",
     "supertest": "*"
-  }
+  },
+  "engines": {
+    "node": ">= 7.6"
+  },
+  "license": "MIT"
 }
