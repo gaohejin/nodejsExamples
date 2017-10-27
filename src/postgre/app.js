@@ -6,7 +6,7 @@ const Koa = require('koa')
 const logger = require('koa-logger')
 const app = new Koa()
 const index = require('./routes/index')
-
+app.use(require('koa-static')(__dirname + '/view'))
 app.use(logger())
 // logger
 app.use(async (ctx, next) => {

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+  <title>增删改查</title>
+  <style type="text/css">
+    .base-button {
+      height: 30px;
+      line-height: 30px;
+      background: #1b9de8;
+      color: #ffffff;
+      border-radius: 6px;
+      border: 1px solid #bfcbd9;
+      padding: 0 10px;
+      box-shadow: 0 4px 10px rgba(73, 127, 255, .42);
+      transition: .3s;
+    }
+
+    .base-button:hover {
+      cursor: pointer;
+      border-color: #1b9de8;
+      color: #ffffff;
+    }
+    .data-list {
+      margin-top: 20px;
+      width: 150px;
+      height: 28px;
+      line-height: 28px;
+      border: 1px solid #1b9de8;
+    }
+    .data-list span {
+      display: inline-block;
+      width: 50px;
+      height: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="main">
+  <div class="tool-menu">
+    <button class="base-button" id="query">查询</button>
+    <button class="base-button" id="add">新增数据</button>
+    <button class="base-button" id="del">删除</button>
+    <button class="base-button" id="update">更新</button>
+  </div>
+  <div class="data-sheet"></div>
+</div>
+<script src="https://cdn.bootcss.com/jslite/1.1.12/JSLite.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js"></script>
+<script type="text/javascript">
+  $('#query').on('click', function () {
+    axios.get('/query', {
+      params: {
+        name: 'FDD'
+      }
+    }).then(function (res) {
+      if (res.data && res.data.data.length > 0) {
+        res.data.data.forEach(function (item, index) {
+          var template = '<div class="data-list">' +
+              '<span>' + index + '</span>' +
+              '<span>' + item['name']+ '</span>' +
+              '<span>' + item['age'] + '</span>' +
+            '</div>'
+          $('.data-sheet').append($(template))
+        })
+      } else {
+        console.log('查询出错！')
+      }
+    })
+  });
+
+  $('#add').on('click', function () {
+    axios.get('/add', {
+      params: {
+        name: '胡明明',
+        age: 25
+      }
+    }).then(function (res) {
+      if (res.data && res.data.data.length > 0) {
+        res.data.data.forEach(function (item, index) {
+          var template = '<div class="data-list">' +
+            '<span>' + index + '</span>' +
+            '<span>' + item['name']+ '</span>' +
+            '<span>' + item['age'] + '</span>' +
+            '</div>'
+          $('.data-sheet').append($(template))
+        })
+      } else {
+        console.log('查询出错！')
+      }
+    })
+  });
+
+  $('#del').on('click', function () {
+    axios.get('/del', {
+      params: {
+        name: '胡明明'
+      }
+    }).then(function (res) {
+      console.log('删除成功！')
+    })
+  });
+
+  $('#update').on('click', function () {
+    axios.get('/edit', {
+      params: {
+        reName: '冯冬冬',
+        name: 'FDD',
+        age: 23
+      }
+    }).then(function (res) {
+      if (res.data && res.data.data.length > 0) {
+        res.data.data.forEach(function (item, index) {
+          var template = '<div class="data-list">' +
+            '<span>' + index + '</span>' +
+            '<span>' + item['name']+ '</span>' +
+            '<span>' + item['age'] + '</span>' +
+            '</div>'
+          $('.data-sheet').append($(template))
+        })
+      } else {
+        console.log('查询出错！')
+      }
+    })
+  });
+</script>
+</body>
+</html>
