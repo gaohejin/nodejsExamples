@@ -12,10 +12,9 @@ const app = new Koa()
 const os = require('os')
 const path = require('path')
 
+app.use(logger())
 
-app.use(logger());
-
-app.use(koaBody({ multipart: true }));
+app.use(koaBody({ multipart: true }))
 
 // 错误处理
 app.use(async function(ctx, next) {
@@ -25,7 +24,7 @@ app.use(async function(ctx, next) {
 })
 
 // 文件存储路径
-app.use(serve(path.join(__dirname, '/view')));
+app.use(serve(path.join(__dirname, '/view')))
 
 app.use(async function(ctx, next) {
   // ignore non-POSTs

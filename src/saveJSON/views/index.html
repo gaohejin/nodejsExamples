@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>上传</title>
+  <style>
+    body {
+      padding: 50px;
+      font: 14px Helvetica, Arial;
+    }
+  </style>
+</head>
+<body>
+<h1>文件上传</h1>
+<p>上传文件</p>
+<form action="/json/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" multiple>
+  <input type="submit" value="上传">
+</form>
+</body>
+</html>
