@@ -1,6 +1,6 @@
 module.exports = {
   port: 1111,
-  assets: '../assets',
+  assets: 'assets',
   db: {
     user: 'postgres',
     database: 'koaexample',

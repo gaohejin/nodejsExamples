@@ -5,7 +5,6 @@
 const pool = require('../db/db')
 const path = require('path')
 const fs = require('fs')
-const Busboy = require('busboy')
 const config = require('../config/config')
 
 // 创建文件存储目录（已存在直接引用不存在则创建）
@@ -26,6 +25,14 @@ function getSuffix (fileName) {
   return fileName.split('.').pop()
 }
 
+function getName (fileName) {
+  let oop = JSON.stringify(fileName)
+  let roop = JSON.parse(oop)
+  let arr = roop.split('.')
+  arr.pop()
+  return arr.join('')
+}
+
 // 重命名
 function Rename (fileName) {
   return Math.random().toString(16).substr(2) + '.' + getSuffix(fileName)
@@ -42,33 +49,25 @@ function removeTemImage (path) {
 
 // 上传文件
 function uploadFile (ctx, next) {
-  const busboy = new Busboy({headers: ctx.req.headers})
-  const filePath = path.resolve(__dirname, config.assets)
+  const file = ctx.request.body.files.file
+  // 此时part为返回的流对象
+  const fullname = file.name
+  const filename = getName(fullname)
+  const filePath = path.resolve(__dirname, '../' + config.assets)
   const confirm = mkdirsSync(filePath)
   if (!confirm) {
     return
   }
   return new Promise(function (resolve, reject) {
-    busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-      console.log(filename)
-      const saveTo = path.join(path.join(filePath, filename))
-      file.pipe(fs.createWriteStream(saveTo))
-      file.on('end', function () {
-        let imgPath = 'http://localhost:' + config.port + `/${filePath}/${filename}`
-        resolve({
-          imgPath: imgPath,
-          imgKey: filename
-        })
+    const reader = fs.createReadStream(file.path)
+    reader.pipe(fs.createWriteStream(filePath + '/' + fullname))
+    reader.on('end', function () {
+      let imgPath = 'http://localhost:' + config.port + '/' + config.assets +`/${fullname}`
+      resolve({
+        imgPath: imgPath,
+        imgKey: filename
       })
     })
-    busboy.on('finish', function () {
-      console.log('finished...')
-    })
-    busboy.on('error', function (err) {
-      console.log('err...')
-      reject(err)
-    })
-    ctx.req.pipe(busboy)
   })
 }
 
@@ -138,7 +137,7 @@ const delData = async (ctx, next) => {
     // 同步等待结果
     await connect.query('Select * FROM imgupload WHERE imgkey=$1', [imgKey]).then(res => {
       if (res.rows) {
-        const filePath = path.resolve(__dirname, config.assets)
+        const filePath = path.resolve(__dirname, '../' + config.assets)
         removeTemImage(filePath + '/' + res.rows[0].imgkey + '.' + res.rows[0].imgpath.split('.').pop())
       }
       return connect.query('DELETE FROM imgupload WHERE imgkey=$1', [imgKey])
