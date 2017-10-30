@@ -15,7 +15,10 @@ onerror(app)
 app.use(convert(cors()))
 app.use(convert(logger()))
 app.use(koaBody({ multipart: true }))
-app.use(resource(path.join(__dirname, './views')))
+app.use(resource(path.join(__dirname, '/'), {
+  index: 'views/index.html',
+  gzip: true
+}))
 // logger
 app.use(async (ctx, next) => {
   try {
@@ -36,7 +39,7 @@ app.on('error', (error, ctx) => {
 })
 
 http.createServer(app.callback()).listen(config.port).on('listening', function () {
-  console.log('正在监听端口' + config.port)
+  console.log('正在监听端口: http://localhost:' + config.port)
 })
 
 export default app

@@ -1,17 +1,52 @@
-import fs from 'fs-promise'
+import formParse from 'co-busboy'
+import fs from 'fs'
 import path from 'path'
+import config from '../config/config'
 const upload = async (ctx, next) => {
   try {
     if (ctx.method !== 'POST') {
       return await next()
     } else {
-      console.log(ctx.request)
       const file = ctx.request.body.files.file
       const reader = fs.createReadStream(file.path)
-      const stream = fs.createWriteStream(path.join(__dirname, '../assets'))
+      // // 解析为generator对象
+      // let parts = formParse(ctx.request)
+      // let part = yield parts
+      // 此数组用于存储图片的url
+      let fileNames = []
+      // 此时part为返回的流对象
+      let filename = file.name
+      fileNames.push(filename)
+      let homeDir = path.resolve(__dirname, '..')
+      let newpath = homeDir + '/static/'+ filename
+      // 生成存储路径，要注意这里的newpath必须是绝对路径，否则Stream报错
+      let stream = fs.createWriteStream(newpath)
+      // 写入文件流
       reader.pipe(stream)
-      console.log('uploading %s -> %s', file.name, stream.path)
-      ctx.redirect('/')
+      if(fileNames.length > 0){
+        console.log('fileNames', fileNames)
+        let imgUrls = []
+        for (let item of fileNames){
+          imgUrls.push('http://localhost:' + config.port + '/static/' + item)
+        }
+        ctx.status = 200
+        ctx.body = {
+          code:0,
+          success: true,
+          message:'上传成功',
+          data: {
+            urls:imgUrls
+          }
+        }
+      }
+    }
+  } catch (error) {
+    ctx.status = 500
+    ctx.body = {
+      code: 500,
+      success: true,
+      message: error,
+      data: {}
     }
   } finally {
   }
